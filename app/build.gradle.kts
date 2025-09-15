@@ -68,6 +68,10 @@ dependencies {
     // Ktor
     implementation(libs.bundles.ktor)
 
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.ktor3)
+
     testImplementation(libs.bundles.unitTests)
 
     androidTestImplementation(libs.androidx.junit)

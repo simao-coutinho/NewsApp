@@ -1,4 +1,4 @@
-package pt.devsorcerer.newsapp.ui.theme
+package pt.devsorcerer.newsapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

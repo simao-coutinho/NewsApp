@@ -4,8 +4,9 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import pt.devsorcerer.newsapp.model.di.dataModule
 
-class NewsApp: Application() {
+class NewsApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -14,7 +15,9 @@ class NewsApp: Application() {
             androidLogger()
             androidContext(this@NewsApp)
             modules(
-                // TODO: add your module here
+                listOf(
+                    dataModule
+                )
             )
         }
     }

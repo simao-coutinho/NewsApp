@@ -5,6 +5,8 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import pt.devsorcerer.newsapp.model.di.dataModule
+import pt.devsorcerer.newsapp.model.di.modelModule
+import pt.devsorcerer.newsapp.model.di.presentationModule
 
 class NewsApp : Application() {
 
@@ -16,7 +18,9 @@ class NewsApp : Application() {
             androidContext(this@NewsApp)
             modules(
                 listOf(
-                    dataModule
+                    dataModule,
+                    presentationModule,
+                    modelModule
                 )
             )
         }

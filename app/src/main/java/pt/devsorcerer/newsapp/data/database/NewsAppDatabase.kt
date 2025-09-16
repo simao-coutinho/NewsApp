@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import pt.devsorcerer.newsapp.data.database.dao.ArticleDao
 import pt.devsorcerer.newsapp.data.database.entities.ArticleEntity
 
 @Database(
@@ -20,4 +21,7 @@ abstract class NewsAppDatabase: RoomDatabase() {
             "news_app.db"
         ).build()
     }
+
+    abstract val articleDao: ArticleDao
+
 }

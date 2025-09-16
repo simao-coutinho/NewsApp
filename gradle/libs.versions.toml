@@ -19,6 +19,7 @@ kotlinx-serialization-json = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -47,8 +48,10 @@ koin-test-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "
 
 # Koin
 koin-android = { module = "io.insert-koin:koin-android" }
-koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-android-compat = { module = "io.insert-koin:koin-android-compat" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 koin-core = { module = "io.insert-koin:koin-core" }
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
 
 # Ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" } # core engine. Not necessary
@@ -74,11 +77,19 @@ unitTests = [
     "koin-test-junit4"
 ]
 
-ktor = ["ktor-client-core",
+ktor = [
+    "ktor-client-core",
     "ktor-client-android",
     "kotlinx-serialization-json",
     "ktor-client-content-negotiation",
     "ktor-serialization-kotlinx-json",
     "ktor-client-logging",
+]
+
+koin = [
+    "koin-core",
+    "koin-android",
+    "koin-android-compat",
+    "koin-androidx-compose"
 ]
 

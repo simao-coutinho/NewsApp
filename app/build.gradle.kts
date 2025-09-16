@@ -53,11 +53,11 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.text.google.fonts)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     // Koin
     implementation(project.dependencies.platform(libs.koin.bom))
-    implementation(libs.koin.core)
-    implementation(libs.koin.android)
+    implementation(libs.bundles.koin)
 
     // Room Database
     implementation(libs.androidx.room.runtime)

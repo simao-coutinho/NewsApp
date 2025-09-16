@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import pt.devsorcerer.newsapp.model.model.Article
+import pt.devsorcerer.newsapp.domain.model.Article
 import pt.devsorcerer.newsapp.presentation.ui.theme.NewsAppTheme
 
 @Composable

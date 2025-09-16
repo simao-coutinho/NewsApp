@@ -4,9 +4,9 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import pt.devsorcerer.newsapp.model.di.dataModule
-import pt.devsorcerer.newsapp.model.di.modelModule
-import pt.devsorcerer.newsapp.model.di.presentationModule
+import pt.devsorcerer.newsapp.domain.di.dataModule
+import pt.devsorcerer.newsapp.domain.di.modelModule
+import pt.devsorcerer.newsapp.domain.di.presentationModule
 
 class NewsApp : Application() {
 

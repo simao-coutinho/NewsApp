@@ -1,4 +1,4 @@
-package pt.devsorcerer.newsapp.data.network.responses
+package pt.devsorcerer.newsapp.domain.responses
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

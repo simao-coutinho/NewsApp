@@ -1,4 +1,4 @@
-package pt.devsorcerer.newsapp.model.model
+package pt.devsorcerer.newsapp.domain.model
 
 data class Article(
     val author: String,

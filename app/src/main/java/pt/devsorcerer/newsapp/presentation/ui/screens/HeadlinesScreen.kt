@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import pt.devsorcerer.newsapp.model.model.Article
+import pt.devsorcerer.newsapp.domain.model.Article
 import pt.devsorcerer.newsapp.presentation.features.headlines.HeadlinesState
 import pt.devsorcerer.newsapp.presentation.features.headlines.HeadlinesViewModel
 import pt.devsorcerer.newsapp.presentation.ui.components.ArticleItem

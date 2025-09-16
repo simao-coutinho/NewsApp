@@ -1,28 +1,9 @@
 package pt.devsorcerer.newsapp.data.network
 
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.DEFAULT
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logger
-import io.ktor.client.plugins.logging.Logging
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import com.plcoding.cryptotracker.core.domain.util.NetworkError
+import com.plcoding.cryptotracker.core.domain.util.CallResult
+import pt.devsorcerer.newsapp.domain.responses.TopHeadlinesResponse
 
-class NewsApiService {
-    val httpClient = HttpClient {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                }
-            )
-        }
-        install(Logging){
-            logger = Logger.DEFAULT
-            level = LogLevel.HEADERS
-        }
-    }
+interface NewsApiService {
+    suspend fun getArticles(): CallResult<TopHeadlinesResponse, NetworkError>
 }

@@ -1,7 +1,7 @@
-package pt.devsorcerer.newsapp.model.mappers
+package pt.devsorcerer.newsapp.domain.mappers
 
 import pt.devsorcerer.newsapp.data.database.entities.ArticleEntity
-import pt.devsorcerer.newsapp.model.model.Article
+import pt.devsorcerer.newsapp.domain.model.Article
 
 fun ArticleEntity.toDomain() = Article(
     author = author,

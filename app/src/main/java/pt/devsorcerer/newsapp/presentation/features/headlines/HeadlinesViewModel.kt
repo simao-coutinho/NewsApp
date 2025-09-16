@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
-import pt.devsorcerer.newsapp.model.model.Article
-import pt.devsorcerer.newsapp.model.repository.HeadlinesRepository
+import pt.devsorcerer.newsapp.domain.model.Article
+import pt.devsorcerer.newsapp.domain.repository.HeadlinesRepository
 
 class HeadlinesViewModel(
     private val headlinesRepository: HeadlinesRepository

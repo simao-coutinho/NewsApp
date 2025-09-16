@@ -1,4 +1,4 @@
-package pt.devsorcerer.newsapp.model.di
+package pt.devsorcerer.newsapp.domain.di
 
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module

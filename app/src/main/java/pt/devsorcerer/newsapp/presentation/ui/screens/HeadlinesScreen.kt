@@ -54,7 +54,7 @@ fun HeadlinesScreen(
         val lazyListState = rememberLazyListState()
 
         LazyColumn(
-            modifier = modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding).padding(16.dp),
             state = lazyListState,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {

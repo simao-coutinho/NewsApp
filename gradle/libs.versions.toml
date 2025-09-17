@@ -54,6 +54,7 @@ koin-core = { module = "io.insert-koin:koin-core" }
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
 
 # Ktor
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" } # core engine. Not necessary
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" } # engine that handles network requests on Android
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
@@ -87,6 +88,7 @@ ktor = [
 ]
 
 koin = [
+    "ktor-client-cio",
     "koin-core",
     "koin-android",
     "koin-android-compat",

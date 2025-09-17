@@ -8,16 +8,16 @@ data class TopHeadlinesResponse(
     @SerialName("status")
     val status: String,
     @SerialName("totalResults")
-    val totalResults: Int?,
+    val totalResults: Int? = null,
     @SerialName("articles")
-    val articles: List<ArticleResponse>?,
+    val articles: List<ArticleResponse>? = listOf(),
     @SerialName("code")
-    val code: String?,
+    val code: String? = null,
     @SerialName("message")
-    val message: String?
-)
-
-sealed class Status(value: String) {
-    object OK : Status("ok")
-    object ERROR : Status("error")
+    val message: String? = null
+) {
+    sealed class Status(val value: String) {
+        object OK : Status("ok")
+        object ERROR : Status("error")
+    }
 }

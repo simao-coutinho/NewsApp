@@ -1,24 +1,26 @@
-package com.plcoding.cryptotracker.core.data.networking
+package pt.devsorcerer.newsapp.data.networking
 
-import com.plcoding.cryptotracker.core.domain.util.NetworkError
+
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.ensureActive
 import kotlinx.serialization.SerializationException
+import pt.devsorcerer.newsapp.domain.util.CallResult
+import pt.devsorcerer.newsapp.domain.util.NetworkError
 import kotlin.coroutines.coroutineContext
 
 suspend inline fun <reified T> safeCall(
     execute: () -> HttpResponse
-): Result<T, NetworkError> {
+): CallResult<T, NetworkError> {
     val result = try {
         execute()
-    } catch (e: UnresolvedAddressException) {
-        return Result.Error(NetworkError.NO_INTERNET)
-    } catch (e: SerializationException) {
-        return Result.Error(NetworkError.SERIALIZATION)
-    } catch (e: Exception) {
+    } catch (_: UnresolvedAddressException) {
+        return CallResult.Error(NetworkError.NO_INTERNET)
+    } catch (_: SerializationException) {
+        return CallResult.Error(NetworkError.SERIALIZATION)
+    } catch (_: Exception) {
         coroutineContext.ensureActive()
-        return Result.Error(NetworkError.UNKNOWN)
+        return CallResult.Error(NetworkError.UNKNOWN)
     }
 
     return responseToResult(result)

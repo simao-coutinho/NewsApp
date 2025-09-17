@@ -3,6 +3,7 @@ package pt.devsorcerer.newsapp.data.database.dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
+import androidx.room.Upsert
 
 /**
  * Interface with the basic methods that must implement the application of the application to make
@@ -27,14 +28,20 @@ interface RoomDao<T> {
      * Your assigned ID
      */
     @Insert
-    fun save(entity: T): Long
+    fun insert(entity: T): Long
 
     /**
-     * Same behavior that [save] unless returning a list with the rowId of all
+     * Same behavior that [insert] unless returning a list with the rowId of all
      * New insertions
      */
     @Insert
-    fun save(entities: List<T>): List<Long>
+    fun insert(entities: List<T>): List<Long>
+
+    @Upsert
+    fun upsert(entity: T): Long
+
+    @Upsert
+    fun upsert(entities: List<T>): List<Long>
 
     /**
      * Update on [entity] database and return the number of affected records

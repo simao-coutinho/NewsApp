@@ -1,10 +1,10 @@
-package com.plcoding.cryptotracker.core.data.networking
+package pt.devsorcerer.newsapp.data.networking
 
-import com.plcoding.cryptotracker.core.domain.util.CallResult
-import com.plcoding.cryptotracker.core.domain.util.NetworkError
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
+import pt.devsorcerer.newsapp.domain.util.CallResult
+import pt.devsorcerer.newsapp.domain.util.NetworkError
 
 
 suspend inline fun <reified T> responseToResult (
@@ -14,7 +14,7 @@ suspend inline fun <reified T> responseToResult (
         in 200..299 -> {
             try {
                 CallResult.Success(response.body<T>())
-            } catch (e: NoTransformationFoundException) {
+            } catch (_: NoTransformationFoundException) {
                 CallResult.Error(NetworkError.SERIALIZATION)
             }
         }

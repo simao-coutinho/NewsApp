@@ -87,7 +87,7 @@ fun HeadlinesScreen(
                 .padding(innerPadding)
                 .padding(16.dp),
             state = lazyListState,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(articles) { article ->
                 ArticleItem(article = article)

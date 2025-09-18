@@ -22,7 +22,10 @@ class HeadlinesViewModel(
     private val mState = MutableStateFlow(HeadlinesState())
     val state: StateFlow<HeadlinesState> = mState.asStateFlow()
 
-    val articles: StateFlow<List<Article>> = headlinesRepository.getHeadlines("")
+    private var currentPage = 1
+    private var isWorking = false
+
+    val articles: StateFlow<List<Article>> = headlinesRepository.getHeadlines()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
@@ -30,13 +33,20 @@ class HeadlinesViewModel(
         )
 
     fun init() {
+        loadMoreItems()
+    }
+
+    fun loadMoreItems() {
         viewModelScope.launch {
             mState.value = mState.value.copy(
                 isLoading = true
             )
+            if (isWorking) return@launch
+            isWorking = true
+            Log.d("HeadlinesViewModel", "loadMoreItems: $currentPage")
 
             headlinesRepository
-                .getRemoteHeadlines("")
+                .getRemoteHeadlines(page = currentPage)
                 .onSuccess { articles ->
                     viewModelScope.launch(Dispatchers.IO) {
                         headlinesRepository.saveArticles(articles)
@@ -45,13 +55,17 @@ class HeadlinesViewModel(
                     mState.value = mState.value.copy(
                         isLoading = false
                     )
+                    currentPage++
+                    isWorking = false
                 }.onError {
-                    Log.d("HeadlinesViewModel", "init: $it")
+                    Log.e("HeadlinesViewModel", "init: $it")
                     mState.value = mState.value.copy(
                         isLoading = false
                     )
+                    isWorking = false
                 }
         }
+
     }
 
 }

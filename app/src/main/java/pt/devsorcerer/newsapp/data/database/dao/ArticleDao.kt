@@ -8,7 +8,7 @@ import pt.devsorcerer.newsapp.data.database.entities.ArticleEntity
 @Dao
 interface ArticleDao : RoomDao<ArticleEntity> {
 
-    @Query("SELECT * FROM articles")
+    @Query("SELECT * FROM articles ORDER BY publishedAt DESC")
     fun getArticles(): Flow<List<ArticleEntity>>
 
 

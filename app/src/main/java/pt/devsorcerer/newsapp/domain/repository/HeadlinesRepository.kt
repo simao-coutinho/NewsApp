@@ -6,7 +6,7 @@ import pt.devsorcerer.newsapp.domain.util.CallResult
 import pt.devsorcerer.newsapp.domain.util.NetworkError
 
 interface HeadlinesRepository {
-    fun getHeadlines(country: String): Flow<List<Article>>
+    fun getHeadlines(): Flow<List<Article>>
     fun saveArticles(articles: List<Article>)
-    suspend fun getRemoteHeadlines(country: String): CallResult<List<Article>, NetworkError>
+    suspend fun getRemoteHeadlines(page: Int = 1): CallResult<List<Article>, NetworkError>
 }

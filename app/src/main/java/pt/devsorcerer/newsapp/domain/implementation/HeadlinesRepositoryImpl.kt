@@ -19,7 +19,7 @@ class HeadlinesRepositoryImpl(
     private val database: NewsAppDatabase,
     private val httpClient: HttpClient,
 ) : HeadlinesRepository {
-    override fun getHeadlines(country: String): Flow<List<Article>> {
+    override fun getHeadlines(): Flow<List<Article>> {
         return database.articleDao.getArticles().map { list ->
             list.map { articleEntity ->
                 articleEntity.toDomain()
@@ -34,10 +34,10 @@ class HeadlinesRepositoryImpl(
         database.articleDao.upsert(articleEntities)
     }
 
-    override suspend fun getRemoteHeadlines(country: String): CallResult<List<Article>, NetworkError> {
+    override suspend fun getRemoteHeadlines(page: Int): CallResult<List<Article>, NetworkError> {
         return safeCall<TopHeadlinesResponse> {
             httpClient.get(
-                urlString = "https://newsapi.org/v2/top-headlines?country=us&apiKey=766ccbd2dab84770880b8035b74cef21"
+                urlString = "https://newsapi.org/v2/top-headlines?language=en&page=$page&apiKey=766ccbd2dab84770880b8035b74cef21"
             )
         }.map { response ->
             if (response.status == TopHeadlinesResponse.Status.OK.value) {

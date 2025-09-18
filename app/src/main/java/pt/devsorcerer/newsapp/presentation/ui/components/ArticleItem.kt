@@ -15,8 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
 import pt.devsorcerer.newsapp.domain.model.Article
 import pt.devsorcerer.newsapp.presentation.ui.theme.NewsAppTheme
@@ -51,8 +54,28 @@ fun ArticleItem(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
             ) {
                 Text(
-                    text = article.title
+                    text = article.title,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp
                 )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row {
+                        Text(
+                            text = article.author ?: "",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 10.sp
+                        )
+                    }
+
+                    Text(
+                        text = formatDate(publishedAt = article.publishedAt),
+                        fontSize = 10.sp
+                    )
+                }
             }
         }
     }

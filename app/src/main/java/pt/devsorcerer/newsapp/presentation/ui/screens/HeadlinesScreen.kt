@@ -30,7 +30,8 @@ import pt.devsorcerer.newsapp.presentation.ui.theme.NewsAppTheme
 @Composable
 fun HeadlinesScreenRoot(
     modifier: Modifier = Modifier,
-    viewModel: HeadlinesViewModel = koinViewModel()
+    viewModel: HeadlinesViewModel = koinViewModel(),
+    onNavigateToArticleDetails: (Article) -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val articles by viewModel.articles.collectAsStateWithLifecycle()
@@ -43,7 +44,10 @@ fun HeadlinesScreenRoot(
         modifier = modifier,
         state = state,
         articles = articles,
-        loadNextItems = { viewModel.loadMoreItems() }
+        loadNextItems = { viewModel.loadMoreItems() },
+        onArticleClicked = { article ->
+            onNavigateToArticleDetails(article)
+        }
     )
 }
 
@@ -53,6 +57,7 @@ fun HeadlinesScreen(
     state: HeadlinesState,
     articles: List<Article> = emptyList(),
     loadNextItems: () -> Unit = {},
+    onArticleClicked: (Article) -> Unit = {},
 ) {
     Scaffold { innerPadding ->
         val lazyListState = rememberLazyListState()
@@ -90,7 +95,11 @@ fun HeadlinesScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(articles) { article ->
-                ArticleItem(article = article)
+                ArticleItem(
+                    article = article,
+                    modifier = Modifier.fillMaxWidth(),
+                    onArticleClicked = { onArticleClicked(article) }
+                )
             }
 
             // Show a loading indicator at the bottom when fetching more items

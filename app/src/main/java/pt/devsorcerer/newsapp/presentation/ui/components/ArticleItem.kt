@@ -1,6 +1,7 @@
 package pt.devsorcerer.newsapp.presentation.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,10 +34,14 @@ import pt.devsorcerer.newsapp.presentation.ui.theme.NewsAppTheme
 @Composable
 fun ArticleItem(
     modifier: Modifier = Modifier,
-    article: Article
+    article: Article,
+    onArticleClicked: () -> Unit = {}
 ) {
     Card(
         modifier = modifier
+            .clickable(onClick = {
+                onArticleClicked()
+            })
     ) {
         Column (
             verticalArrangement = Arrangement.spacedBy(8.dp),

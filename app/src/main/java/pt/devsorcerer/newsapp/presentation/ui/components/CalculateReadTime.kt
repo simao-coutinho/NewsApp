@@ -19,7 +19,7 @@ fun calculateReadingTime(content: String?): String {
         // Count words by splitting on any whitespace
         val wordCount = content?.split(Regex("\\s+"))?.size ?: 0
         if (wordCount == 0) {
-            return@remember "1 min read"
+            return@remember "1 min\nread"
         }
 
         // Calculate time and round up to the nearest minute
@@ -28,6 +28,6 @@ fun calculateReadingTime(content: String?): String {
         // Ensure the minimum reading time is 1 minute
         val finalTime = maxOf(1, readingTime)
 
-        "$finalTime min read"
+        "$finalTime min\nread"
     }
 }

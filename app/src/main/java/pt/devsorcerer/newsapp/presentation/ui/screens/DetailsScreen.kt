@@ -1,15 +1,20 @@
 package pt.devsorcerer.newsapp.presentation.ui.screens
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -24,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,22 +42,27 @@ import pt.devsorcerer.newsapp.presentation.ui.components.calculateReadingTime
 import pt.devsorcerer.newsapp.presentation.ui.components.formatDate
 import pt.devsorcerer.newsapp.presentation.ui.theme.NewsAppTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun DetailsScreenRoot(
+fun SharedTransitionScope.DetailsScreenRoot(
     modifier: Modifier = Modifier,
     article: Article,
-    viewModel: DetailsViewModel = koinViewModel()
+    viewModel: DetailsViewModel = koinViewModel(),
+    animatedContentScope: AnimatedContentScope
 ) {
     DetailsScreen(
         modifier = modifier,
-        article = article
+        article = article,
+        animatedContentScope = animatedContentScope
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun DetailsScreen(
+fun SharedTransitionScope.DetailsScreen(
     modifier: Modifier = Modifier,
-    article: Article
+    article: Article,
+    animatedContentScope: AnimatedContentScope,
 ) {
     Scaffold { innerPadding ->
         Box(modifier = modifier.padding(innerPadding)) {
@@ -64,6 +75,10 @@ fun DetailsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
+                    .sharedElement(
+                        sharedContentState = rememberSharedContentState(key = "image-${article.url}"),
+                        animatedVisibilityScope = animatedContentScope
+                    )
             )
 
             Column(
@@ -80,6 +95,10 @@ fun DetailsScreen(
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     modifier = Modifier.padding(16.dp)
+                        .sharedElement(
+                            sharedContentState = rememberSharedContentState(key = "title-${article.url}"),
+                            animatedVisibilityScope = animatedContentScope
+                        )
                 )
 
                 Card(
@@ -103,24 +122,31 @@ fun DetailsScreen(
                                 modifier = Modifier.padding(end = 4.dp).size(20.dp)
                             )
 
-                            Text(
-                                text = article.author ?: "",
-                                fontWeight = FontWeight.Bold,
-                            )
+                            Column(
+                                horizontalAlignment = Alignment.Start,
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = article.author ?: "",
+                                    fontWeight = FontWeight.Bold,
+                                )
 
-                            Text(
-                                text = formatDate(publishedAt = article.publishedAt),
-                            )
+                                Text(
+                                    text = formatDate(publishedAt = article.publishedAt),
+                                )
+                            }
 
                             Icon(
-                                painter = painterResource(R.drawable.ic_circle),
+                                painter = painterResource(R.drawable.ic_time),
                                 contentDescription = null,
-                                modifier = Modifier.size(8.dp),
+                                modifier = Modifier.size(24.dp),
                                 tint = MaterialTheme.colorScheme.primary
                             )
 
                             Text(
                                 text = calculateReadingTime(article.content),
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.defaultMinSize(48.dp)
                             )
                         }
                     }
@@ -132,23 +158,5 @@ fun DetailsScreen(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun DetailsScreenPreview() {
-    NewsAppTheme {
-        DetailsScreen(
-            article = Article(
-                author = "m",
-                title = "m",
-                description = "m",
-                url = "m",
-                urlToImage = "m",
-                publishedAt = "m",
-                content = "m"
-            )
-        )
     }
 }

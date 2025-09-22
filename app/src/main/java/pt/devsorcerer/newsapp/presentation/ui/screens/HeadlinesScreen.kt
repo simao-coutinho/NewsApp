@@ -1,6 +1,9 @@
 package pt.devsorcerer.newsapp.presentation.ui.screens
 
 import android.util.Log
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,11 +30,13 @@ import pt.devsorcerer.newsapp.presentation.features.headlines.HeadlinesViewModel
 import pt.devsorcerer.newsapp.presentation.ui.components.ArticleItem
 import pt.devsorcerer.newsapp.presentation.ui.theme.NewsAppTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun HeadlinesScreenRoot(
+fun SharedTransitionScope.HeadlinesScreenRoot(
     modifier: Modifier = Modifier,
     viewModel: HeadlinesViewModel = koinViewModel(),
-    onNavigateToArticleDetails: (Article) -> Unit = {}
+    onNavigateToArticleDetails: (Article) -> Unit = {},
+    animatedContentScope: AnimatedContentScope,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val articles by viewModel.articles.collectAsStateWithLifecycle()
@@ -47,17 +52,20 @@ fun HeadlinesScreenRoot(
         loadNextItems = { viewModel.loadMoreItems() },
         onArticleClicked = { article ->
             onNavigateToArticleDetails(article)
-        }
+        },
+        animatedContentScope = animatedContentScope
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun HeadlinesScreen(
+fun SharedTransitionScope.HeadlinesScreen(
     modifier: Modifier = Modifier,
     state: HeadlinesState,
     articles: List<Article> = emptyList(),
     loadNextItems: () -> Unit = {},
     onArticleClicked: (Article) -> Unit = {},
+    animatedContentScope: AnimatedContentScope,
 ) {
     Scaffold { innerPadding ->
         val lazyListState = rememberLazyListState()
@@ -98,7 +106,9 @@ fun HeadlinesScreen(
                 ArticleItem(
                     article = article,
                     modifier = Modifier.fillMaxWidth(),
-                    onArticleClicked = { onArticleClicked(article) }
+                    onArticleClicked = { onArticleClicked(article) },
+                    animatedContentScope = animatedContentScope,
+
                 )
             }
 
@@ -116,17 +126,5 @@ fun HeadlinesScreen(
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun HeadlinesScreenPreview() {
-    NewsAppTheme {
-        HeadlinesScreen(
-            state = HeadlinesState(
-                isLoading = true
-            )
-        )
     }
 }

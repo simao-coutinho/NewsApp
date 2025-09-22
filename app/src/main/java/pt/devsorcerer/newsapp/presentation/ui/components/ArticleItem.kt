@@ -1,5 +1,8 @@
 package pt.devsorcerer.newsapp.presentation.ui.components
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,25 +20,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
 import pt.devsorcerer.newsapp.R
 import pt.devsorcerer.newsapp.domain.model.Article
-import pt.devsorcerer.newsapp.presentation.ui.theme.NewsAppTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun ArticleItem(
+fun SharedTransitionScope.ArticleItem(
     modifier: Modifier = Modifier,
     article: Article,
-    onArticleClicked: () -> Unit = {}
+    onArticleClicked: () -> Unit = {},
+    animatedContentScope: AnimatedContentScope,
 ) {
     Card(
         modifier = modifier
@@ -56,7 +57,11 @@ fun ArticleItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
-                        .clip(RoundedCornerShape( topStart = 16.dp, topEnd = 16.dp)),
+                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                        .sharedElement(
+                            sharedContentState = rememberSharedContentState(key = "image-${article.url}"),
+                            animatedVisibilityScope = animatedContentScope,
+                        ),
                 )
             }
 
@@ -67,7 +72,12 @@ fun ArticleItem(
                 Text(
                     text = article.title,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp
+                    fontSize = 12.sp,
+                    modifier = Modifier
+                        .sharedElement( // Apply modifier with the SAME key
+                            sharedContentState = rememberSharedContentState(key = "title-${article.url}"),
+                            animatedVisibilityScope = animatedContentScope,
+                        )
                 )
 
                 Row(
@@ -96,23 +106,5 @@ fun ArticleItem(
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun ArticleItemPreview() {
-    NewsAppTheme {
-        ArticleItem(
-            article = Article(
-                author = "m",
-                title = "m",
-                description = "m",
-                url = "m",
-                urlToImage = "m",
-                publishedAt = "m",
-                content = "m"
-            )
-        )
     }
 }

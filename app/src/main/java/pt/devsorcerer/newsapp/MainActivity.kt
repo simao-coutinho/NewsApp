@@ -13,10 +13,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
-
             NewsAppTheme {
-                NavGraph(navController = navController)
+                NavGraph()
             }
         }
     }
